@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1, 2, 3">
+
+    <TableRow>
+        <TextView
+            android:text="Name : "/>
+        <EditText
+            android:layout_span="3"/>
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:text="Yes"
+            android:layout_column="2"/>
+        <Button
+            android:text="No"/>
+    </TableRow>
+
+</TableLayout>
