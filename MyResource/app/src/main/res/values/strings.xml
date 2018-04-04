@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyResource</string>
+    <string name="note">To be, or no to be: that is the question</string>
 </resources>
