@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="sound_list"
+        android:title="카카오톡 알림음 선택"
+        android:entryValues="@array/sound_list"
+        android:entries="@array/sound_list"
+        android:summary="카톡">
+    </ListPreference>
+    <PreferenceCategory
+        android:title="알림 보기">
+        <SwitchPreference
+            android:key="preview"
+            android:title="미리 보기"/>
+
+        <SwitchPreference
+            android:key="photoPreview"
+            android:title="사진 미리 보기"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="새 메세지 알림">
+        <SwitchPreference
+            android:key="sound"
+            android:title="앱 실행 중 사운드"/>
+
+        <SwitchPreference
+            android:key="vibrator"
+            android:title="앱 실행 중 진동"/>
+    </PreferenceCategory>
+</PreferenceScreen>
