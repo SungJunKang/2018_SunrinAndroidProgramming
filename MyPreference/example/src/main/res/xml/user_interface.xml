@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="roaming"
+        android:title="데이터 로밍"
+        android:summary="로밍 시 데이터 서비스에 연결" />
+    <ListPreference
+        android:key="network_list"
+        android:title="기본 네트워크 설정"
+        android:entryValues="@array/network_list"
+        android:entries="@array/network_list"
+        android:summary="LTE(권장)" />
+    <SwitchPreference
+        android:key="lte_mode"
+        android:title="향상된 4G LTE 모드"
+        android:summary="LTE 서비스를 사용하여 음성 및 기타 통신을 개선할 수 있습니다.(권장)" />
+    <PreferenceScreen
+        android:key="apn1"
+        android:title="APN">
+        <PreferenceScreen
+            android:key="apn2"
+            android:title="SKT_3G_INTERNET" />
+        <PreferenceScreen
+            android:key="apn3"
+            android:title="SKT_LTE_INTERNET" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="manager"
+        android:title="네트워크 운영자"
+        android:summary="네트워크 운영자 선택">
+        <intent
+            android:targetPackage="com.example.example"
+            android:targetClass="com.example.example.SubActivity" />
+    </PreferenceScreen>
+</PreferenceScreen>
