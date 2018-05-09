@@ -31,14 +31,19 @@ public class PersonAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(layoutId, null);
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(layoutId, null);
+            PersonHolder holder = new PersonHolder(convertView);
+            convertView.setTag(holder);
+        }
 
-        ImageView photoImageView = convertView.findViewById(R.id.item_photo);
-        TextView itemNameView = convertView.findViewById(R.id.item_name);
-        TextView itemDateView = convertView.findViewById(R.id.item_date);
-        ImageView callImageView = convertView.findViewById(R.id.call);
+        PersonHolder holder = (PersonHolder)convertView.getTag();
+        ImageView photoImageView = holder.photoImageView;
+        TextView itemNameView = holder.itemNameView;
+        TextView itemDateView = holder.itemDateView;
+        ImageView callImageView = holder.callImageView;
 
         final Person person = datas.get(position);
 

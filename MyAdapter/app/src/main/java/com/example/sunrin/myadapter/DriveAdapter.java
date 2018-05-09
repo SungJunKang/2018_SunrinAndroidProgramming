@@ -32,15 +32,21 @@ public class DriveAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // custom_item 객체화 시켜줌(inflation)
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(layoutId, null);
+        // 성능 이슈와 관련하여 1번만 실행
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(layoutId, null);
+            DriveHolder holder = new DriveHolder(convertView);
+            convertView.setTag(holder);
+        }
 
         // view 객체 findViewById 로 찾아오기
-        ImageView typeImageView = convertView.findViewById(R.id.type_img);
-        TextView itemTitleView = convertView.findViewById(R.id.item_title);
-        TextView itemDateView = convertView.findViewById(R.id.item_date);
-        ImageView menuImageView = convertView.findViewById(R.id.menu_img);
+        DriveHolder holder = (DriveHolder)convertView.getTag();
+        ImageView typeImageView = holder.typeImageView;
+        TextView itemTitleView = holder.titleView;
+        TextView itemDateView = holder.dateView;
+        ImageView menuImageView = holder.menuImageView;
 
         Drive drive = datas.get(position);
 
