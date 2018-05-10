@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_array">
+        <item>한국어</item>
+        <item>영어</item>
+        <item>스페인어</item>
+        <item>독일어</item>
+        <item>중국어</item>
+        <item>일본어</item>
+    </string-array>
+
+    <string-array name="auto_array">
+        <item>Kim 시현</item>
+        <item>Kim 도언</item>
+        <item>Kim 도원</item>
+        <item>Park 태준</item>
+        <item>Park 상천</item>
+        <item>Lee 로운</item>
+        <item>Lee 헌우</item>
+        <item>Lee 소연</item>
+    </string-array>
+</resources>
