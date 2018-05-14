@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // 브라우저 자체 이벤트(alert, confirm)
         webView.setWebChromeClient(new MyWebChromeClient(this));
 
+        // button 클릭 이벤트 설정
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
