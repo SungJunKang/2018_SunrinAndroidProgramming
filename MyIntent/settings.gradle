@@ -1,1 +1,1 @@
-include ':app', ':test11'
+include ':app', ':test11', ':intent'
