@@ -1,12 +1,17 @@
 package com.example.intent;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button contactsBtn;
@@ -42,52 +49,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resultView = findViewById(R.id.resultView);
-        contactsBtn = findViewById(R.id.btn_contacts);
-        cameraDataBtn = findViewById(R.id.btn_camera_data);
-        cameraFileBtn = findViewById(R.id.btn_camera_file);
-        speechBtn = findViewById(R.id.btn_speech);
-        mapBtn = findViewById(R.id.btn_map);
-        browserBtn = findViewById(R.id.btn_browser);
-        callBtn = findViewById(R.id.btn_call);
-        resultImageView = findViewById(R.id.resultImageView);
-        galleryBtn = findViewById(R.id.btn_gallery);
-
-        contactsBtn.setOnClickListener(this);
-        cameraDataBtn.setOnClickListener(this);
-        cameraFileBtn.setOnClickListener(this);
-        speechBtn.setOnClickListener(this);
-        mapBtn.setOnClickListener(this);
-        browserBtn.setOnClickListener(this);
-        callBtn.setOnClickListener(this);
-        resultImageView.setOnClickListener(this);
-        galleryBtn.setOnClickListener(this);
-
-        // reqWidth = getResources().getDimensionPixelSize(R.dimen.request_image_width);
-        // reqHeight = getResources().getDimensionPixelSize(R.dimen.request_image_height);
-    }
 
     @Override
     public void onClick(View v) {
-        if(v == contactsBtn){
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setData(ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, 10);
-        }
-
-        else if(v == cameraDataBtn){
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, 30);
-        }
-
-        else if(v == resultImageView){
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            Uri photoUri = FileProvider.getUriForFile(this,
-                    BuildConfig.APPLICATION_ID + ".provider", filePath);
-            intent.setDataAndType(photoUri, "image/*");
-            intent.addFlags(intent.FLAG_GRANT_READ_URI_PERMISSION);
+        else if(v == mapBtn){
+            // 지도 연동
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("geo:37.5662952, 126.9779451?q=37.5662952, 126.9779451"));
             startActivity(intent);
+        }
+
+        else if(v == browserBtn){
+            // 브라우저
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://www.seoul.go.kr"));
+            startActivity(intent);
+        }
+
+        else if(v == callBtn){
+            // 전화 걸기, 권한 필요
+            if(ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CALL_PHONE) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-1234-5678"));
+                startActivity(intent);
+            }
+
+            else{
+                // 권한 요청
+                ActivityCompat.requestPermissions(this, new String[]
+                        { Manifest.permission.CALL_PHONE }, 100);
+            }
         }
     }
 
@@ -105,6 +97,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(requestCode == 30 && resultCode == RESULT_OK){
             Bitmap bitmap = (Bitmap)data.getExtras().get("data");
             resultImageView.setImageBitmap(bitmap);
+        }
+
+        else if(requestCode == 40 && resultCode == RESULT_OK){
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath.getAbsolutePath());
+            resultImageView.setImageBitmap(bitmap);
+        }
+
+        else if(requestCode == 50 && resultCode == RESULT_OK){
+            // 음성인식 결과 보여주기
+            ArrayList<String> results = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            String result = results.get(0);
+            resultView.setText(result);
         }
     }
 }
